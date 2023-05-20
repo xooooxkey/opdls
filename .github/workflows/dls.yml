@@ -48,3 +48,4 @@ jobs:
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: /opt/dls/*
+          asset_name: result.zip
