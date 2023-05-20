@@ -14,7 +14,7 @@ on:
         required: true
       file_name:
         description: 'File Name'
-        required: false
+        required: true
 
 jobs:
   download_and_release:
