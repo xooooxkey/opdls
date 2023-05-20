@@ -23,6 +23,8 @@ jobs:
 
       - name: Download files
         run: |
+          echo "$url"
+          echo "$headers"
           aria2c -x16 --header="$headers" -d /opt/dls "$url"
 
       - name: Generate release description
