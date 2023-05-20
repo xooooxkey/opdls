@@ -44,15 +44,6 @@ jobs:
           release_name: ${{ inputs.task_name }}
           body: ${{ steps.release_description.outputs.description }}
 
-      - name: Upload files to release
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: /opt/dls/a.bin
-          asset_name: ${{ inputs.file_name }}
-          asset_content_type: application/octet-stream
           
       - name: Upload files ZIP to release
         uses: actions/upload-release-asset@v1
