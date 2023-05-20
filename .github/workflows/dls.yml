@@ -1,0 +1,51 @@
+name: Download and Release Files
+
+on:
+  workflow_dispatch:
+    inputs:
+      headers:
+        description: 'Headers'
+        required: true
+      url:
+        description: 'URL'
+        required: true
+      task_name:
+        description: 'Task Name'
+        required: true
+
+jobs:
+  download_and_release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install aria2
+        run: sudo apt-get update && sudo apt-get install -y aria2
+
+      - name: Download files
+        run: |
+          aria2c -x16 -H "$headers" -d /opt/dls "$url"
+
+      - name: Generate release description
+        id: release_description
+        run: echo "::set-output name=description::$(uuidgen)"
+
+      - name: Create release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.run_number }}
+          release_name: ${{ inputs.task_name }}
+          body: ${{ steps.release_description.outputs.description }}
+
+      - name: Upload files to release
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: /opt/dls/*
