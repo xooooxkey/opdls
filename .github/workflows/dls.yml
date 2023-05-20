@@ -11,7 +11,7 @@ on:
         required: true
       task_name:
         description: 'Task Name'
-        required: false
+        required: true
 
 jobs:
   download_and_release:
