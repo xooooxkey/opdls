@@ -5,13 +5,13 @@ on:
     inputs:
       headers:
         description: 'Headers'
-        required: true
+        required: false
       url:
         description: 'URL'
         required: true
       task_name:
         description: 'Task Name'
-        required: true
+        required: false
 
 jobs:
   download_and_release:
