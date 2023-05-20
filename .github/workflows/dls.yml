@@ -12,6 +12,9 @@ on:
       task_name:
         description: 'Task Name'
         required: true
+      file_name:
+        description: 'File Name'
+        required: false
 
 jobs:
   download_and_release:
@@ -25,7 +28,7 @@ jobs:
         run: |
           echo "${{ inputs.url }}"
           echo "${{ inputs.headers }}"
-          aria2c -x16 --header="${{ inputs.headers }}" -d /opt/dls "${{ inputs.url }}"
+          aria2c -x16 --header="${{ inputs.headers }}" -d /opt/dls "${{ inputs.url }} -o a.bin"
 
       - name: Generate release description
         id: release_description
@@ -47,6 +50,16 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: /opt/dls/*
+          asset_path: /opt/dls/a.bin
+          asset_name: ${{ inputs.file_name }}
+          asset_content_type: application/octet-stream
+          
+      - name: Upload files ZIP to release
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: /opt/dls/
           asset_name: result.zip
-          asset_content_type: application/zip
+          asset_content_type: application/octet-stream
