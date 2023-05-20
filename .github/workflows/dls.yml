@@ -28,7 +28,7 @@ jobs:
         run: |
           echo "${{ inputs.url }}"
           echo "${{ inputs.headers }}"
-          aria2c -x16 --header="${{ inputs.headers }}" -d /opt/dls "${{ inputs.url }} -o a.bin"
+          aria2c -x16 --header="${{ inputs.headers }}" -o a.bin -d /opt/dls "${{ inputs.url }}"
 
       - name: Generate release description
         id: release_description
