@@ -21,9 +21,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Install aria2
-        run: sudo apt-get update && sudo apt-get install -y aria2
-
       - name: Download files
         run: |
           aria2c -x16 --header="$headers" -d /opt/dls "$url"
