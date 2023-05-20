@@ -26,7 +26,7 @@ jobs:
 
       - name: Download files
         run: |
-          aria2c -x16 -H "$headers" -d /opt/dls "$url"
+          aria2c -x16 --header="$headers" -d /opt/dls "$url"
 
       - name: Generate release description
         id: release_description
