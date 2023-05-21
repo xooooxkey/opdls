@@ -29,28 +29,7 @@ jobs:
           echo "${{ inputs.url }}"
           echo "${{ inputs.headers }}"
           aria2c -x16 --header="${{ inputs.headers }}" -o a.bin -d /opt/dls "${{ inputs.url }}"
-
-      - name: Generate release description
-        id: release_description
-        run: echo "::set-output name=description::$(uuidgen)"
-
-      - name: Create release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.vtoken }}
-        with:
-          tag_name: ${{ github.run_number }}
-          release_name: ${{ inputs.task_name }}
-          body: ${{ steps.release_description.outputs.description }}
-
           
       - name: Upload files ZIP to release
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: /opt/dls/
-          asset_name: result.zip
-          asset_content_type: application/octet-stream
+        run: |
+          python main.py
