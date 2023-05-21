@@ -44,10 +44,9 @@ def upload_file_in_chunks(url, file_path):
 
     url = str(url).replace("{?name,label}", "?name=" + os.path.basename(file_path))
 
-    cy = f'''curl -L -X POST -H "Accept: application/vnd.github+json" -H "Authorization: Bearer {vtoken}" -H "X-GitHub-Api-Version: 2022-11-28" -H "Content-Type: application/octet-stream" {url} --data-binary "@{file_path}"'''
+    cy = f'''curl -L -X POST -H "Accept: application/vnd.github+json" -H "Authorization: Bearer {vtoken}" -H "X-GitHub-Api-Version: 2022-11-28" -H "Content-Type: application/octet-stream" {url} --data-raw "@{file_path}"'''
 
-    os.system(cy)
-
+    print(os.system(cy))
     print("文件上传完成")
 
 
