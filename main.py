@@ -1,4 +1,5 @@
 import os
+import random
 import requests
 import json
 
@@ -16,7 +17,7 @@ def creat_release(name, body):
         'X-GitHub-Api-Version': '2022-11-28'
     }
     payload = {
-        'tag_name': tag_name,
+        'tag_name': "x." + tag_name + "." + str(random.randint(1000, 9999)),
         'target_commitish': 'master',
         'name': name,
         'body': body,
