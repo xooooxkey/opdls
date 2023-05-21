@@ -17,7 +17,7 @@ def creat_release(name, body):
         'X-GitHub-Api-Version': '2022-11-28'
     }
     payload = {
-        'tag_name': "x." + tag_name + "." + str(random.randint(1000, 9999)),
+        'tag_name': "test" + tag_name + "." + str(random.randint(1000, 9999)),
         'target_commitish': 'master',
         'name': name,
         'body': body,
