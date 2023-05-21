@@ -6,15 +6,6 @@ on:
       headers:
         description: 'Headers'
         required: false
-      url:
-        description: 'URL'
-        required: true
-      task_name:
-        description: 'Task Name'
-        required: true
-      file_name:
-        description: 'File Name'
-        required: true
 
 jobs:
   download_and_release:
