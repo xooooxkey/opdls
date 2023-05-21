@@ -1,0 +1,31 @@
+name: Download and Release Files
+
+on:
+  workflow_dispatch:
+    inputs:
+      headers:
+        description: 'Headers'
+        required: false
+      url:
+        description: 'URL'
+        required: true
+      task_name:
+        description: 'Task Name'
+        required: true
+      file_name:
+        description: 'File Name'
+        required: true
+
+jobs:
+  download_and_release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: hpy
+        env:
+          SECRETS_VTOKEN: ${{ secrets.vtoken }}
+        run: |
+          python main.py
