@@ -4,7 +4,7 @@ import requests
 import json
 
 
-def creat_release(name, body):
+def creat_release(name, body, target_commitish="main"):
     repository = os.environ.get('GITHUB_REPOSITORY')
     vtoken = os.environ.get('SECRETS_VTOKEN')
     tag_name = str("v" + os.environ.get('GITHUB_RUN_NUMBER') + "." + str(random.randint(10, 99)) + "." + str(random.randint(100, 999)))
@@ -18,7 +18,7 @@ def creat_release(name, body):
     }
     payload = {
         'tag_name': tag_name,
-        'target_commitish': 'master',
+        'target_commitish': target_commitish,
         'name': name,
         'body': body,
         'draft': False,
