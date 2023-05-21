@@ -32,3 +32,6 @@ def creat_release(tag_name, name, body):
     else:
         print('Failed to create release. Status code:', response.status_code)
         print('Response:', response.text)
+
+
+creat_release("hi", "hi", "hi")
