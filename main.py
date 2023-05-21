@@ -27,7 +27,7 @@ def creat_release(name, body):
     }
     payload = json.dumps(payload)
     print(payload)
-    response = requests.post(url, headers=headers, data=)
+    response = requests.post(url, headers=headers, data=payload)
 
     if response.status_code == 201:
         print('Release created successfully.')
