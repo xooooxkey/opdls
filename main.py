@@ -41,14 +41,9 @@ def creat_release(name, body, target_commitish="main"):
 def upload_file_in_chunks(url, file_path):
     vtoken = os.environ.get('SECRETS_VTOKEN')
     filename = os.environ.get('FILE_NAME')
+    url = str(url).replace("{?name,label}", "?name=" + filename)
 
-    cy = f'''curl -L -X POST 
-  -H "Accept: application/vnd.github+json" \
-  -H "Authorization: Bearer {vtoken}"\
-  -H "X-GitHub-Api-Version: 2022-11-28" \
-  -H "Content-Type: application/octet-stream" \
-  {upload_url} \
-  --data-binary "{filename}"'''
+    cy = f'''curl -L -X POST -H "Accept: application/vnd.github+json" -H "Authorization: Bearer {vtoken}" -H "X-GitHub-Api-Version: 2022-11-28" -H "Content-Type: application/octet-stream" {url} --data-binary "{file_path}"'''
 
     os.system(cy)
 
