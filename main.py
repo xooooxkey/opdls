@@ -39,40 +39,18 @@ def creat_release(name, body, target_commitish="main"):
 
 
 def upload_file_in_chunks(url, file_path):
-    chunk_size = 40 * 1024 * 1024  # 每块大小为 40MB
-    total_size = os.path.getsize(file_path)
     vtoken = os.environ.get('SECRETS_VTOKEN')
+    filename = os.environ.get('FILE_NAME')
 
-    headers = {
-        "Accept": "application/vnd.github+json",
-        'Authorization': 'Bearer ' + vtoken,
-        'X-GitHub-Api-Version': '2022-11-28',
-        "Content-Type": "application/octet-stream"
-    }
+    cy = f'''curl -L -X POST 
+  -H "Accept: application/vnd.github+json" \
+  -H "Authorization: Bearer {vtoken}"\
+  -H "X-GitHub-Api-Version: 2022-11-28" \
+  -H "Content-Type: application/octet-stream" \
+  {upload_url} \
+  --data-binary "{filename}"'''
 
-    with open(file_path, 'rb') as file:
-        chunk_number = 0
-        while True:
-            chunk_data = file.read(chunk_size)
-            if not chunk_data:
-                break
-
-            # 设置当前块的起始位置和结束位置
-            start_byte = chunk_number * chunk_size
-            end_byte = start_byte + len(chunk_data) - 1
-            content_range = f"bytes {start_byte}-{end_byte}/{total_size}"
-
-            # 设置当前块的请求头
-            current_headers = headers.copy()
-            current_headers['Content-Range'] = content_range
-
-            # 发送当前块的上传请求
-            response = requests.put(upload_url, headers=current_headers, data=chunk_data)
-            response.raise_for_status()
-
-            chunk_number += 1
-
-            print(response.status_code, response.text)
+    os.system(cy)
 
     print("文件上传完成")
 
