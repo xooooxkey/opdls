@@ -31,5 +31,7 @@ jobs:
           aria2c -x16 --header="${{ inputs.headers }}" -o a.bin -d /opt/dls "${{ inputs.url }}"
           
       - name: Upload files ZIP to release
+        env:
+          SECRETS_VTOKEN: ${{ secrets.vtoken }}
         run: |
           python main.py
