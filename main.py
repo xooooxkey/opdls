@@ -7,7 +7,7 @@ import json
 def creat_release(name, body):
     repository = os.environ.get('GITHUB_REPOSITORY')
     vtoken = os.environ.get('SECRETS_VTOKEN')
-    tag_name = "v" + os.environ.get('GITHUB_RUN_NUMBER') + "." + str(random.randint(1000, 9999)) + "." + str(random.randint(1000, 9999)),
+    tag_name = "v" + os.environ.get('GITHUB_RUN_NUMBER') + "." + str(random.randint(1000, 9999)) + "." + str(random.randint(1000, 9999))
     print(repository, vtoken, tag_name)
 
     url = f'https://api.github.com/repos/{repository}/releases'
