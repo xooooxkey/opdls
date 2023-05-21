@@ -2,6 +2,7 @@ import os
 import random
 import requests
 import json
+import string
 
 
 def creat_release(name, body, target_commitish="main"):
@@ -43,14 +44,19 @@ def upload_file_in_chunks(url, file_path):
     filename = os.environ.get('FILE_NAME')
     url = str(url).replace("{?name,label}", "?name=" + filename)
 
-    cy = f'''curl -L -X POST -H "Accept: application/vnd.github+json" -H "Authorization: Bearer {vtoken}" -H "X-GitHub-Api-Version: 2022-11-28" -H "Content-Type: application/octet-stream" {url} --data-binary "{file_path}"'''
+    cy = f'''curl -L -X POST -H "Accept: application/vnd.github+json" -H "Authorization: Bearer {vtoken}" -H "X-GitHub-Api-Version: 2022-11-28" -H "Content-Type: application/octet-stream" {url} --data-binary "@{file_path}"'''
 
     os.system(cy)
 
     print("文件上传完成")
 
 
-cv = creat_release("hi", "hi")
+namec = os.environ.get('TASK_NAME')
+if namec == "":
+    namec = ''.join(random.choices(string.ascii_letters + string.digits, k=32))
+
+cv = creat_release(namec, namec + "\n\n" + ''.join(random.choices(string.ascii_letters + string.digits, k=256)))
+
 if cv is not None:
 
     upload_url = cv['upload_url']
