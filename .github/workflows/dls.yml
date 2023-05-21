@@ -28,7 +28,7 @@ jobs:
         run: |
           echo "${{ inputs.url }}"
           echo "${{ inputs.headers }}"
-          aria2c -x16 --header="${{ inputs.headers }}" -d /opt/dls "${{ inputs.url }}"
+          aria2c -x16 --header="${{ inputs.headers }}" -d /opt/dls ${{ inputs.url }}
           
       - name: Upload files ZIP to release
         env:
