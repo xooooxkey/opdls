@@ -4,12 +4,11 @@ import json
 
 
 def creat_release(tag_name, name, body):
-    repository_owner = os.environ.get('GITHUB_REPOSITORY_OWNER')
-    repository_name = os.environ.get('GITHUB_REPOSITORY_NAME')
+    repository = os.environ.get('GITHUB_REPOSITORY')
     vtoken = os.environ.get('SECRETS_VTOKEN')
-    print(repository_owner, repository_name, vtoken)
+    print(repository, vtoken)
 
-    url = f'https://api.github.com/repos/{repository_owner}/{repository_name}/releases'
+    url = f'https://api.github.com/repos/{repository}/releases'
     headers = {
         'Accept': 'application/vnd.github+json',
         'Authorization': 'Bearer ' + vtoken,
