@@ -6,7 +6,7 @@ import json
 def creat_release(tag_name, name, body):
     repository_owner = os.environ.get('GITHUB_REPOSITORY_OWNER')
     repository_name = os.environ.get('GITHUB_EVENT_REPOSITORY_NAME')
-    vtoken = os.environ.get('VTOKEN')
+    vtoken = os.environ.get('SECRETS_VTOKEN')
     print(repository_owner, repository_name, vtoken)
 
     url = f'https://api.github.com/repos/{repository_owner}/{repository_name}/releases'
