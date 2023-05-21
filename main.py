@@ -3,10 +3,11 @@ import requests
 import json
 
 
-def creat_release(tag_name, name, body):
+def creat_release(name, body):
     repository = os.environ.get('GITHUB_REPOSITORY')
     vtoken = os.environ.get('SECRETS_VTOKEN')
-    print(repository, vtoken)
+    tag_name = os.environ.get('GITHUB_RUN_NUMBER')
+    print(repository, vtoken, tag_name)
 
     url = f'https://api.github.com/repos/{repository}/releases'
     headers = {
@@ -33,4 +34,4 @@ def creat_release(tag_name, name, body):
         print('Response:', response.text)
 
 
-creat_release("hi", "hi", "hi")
+creat_release("hi", "hi")
