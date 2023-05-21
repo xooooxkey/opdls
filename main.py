@@ -82,7 +82,11 @@ if cv is not None:
 
     upload_url = cv['upload_url']
 
-    file_path = "/path/to/file"  # 替换为实际的文件路径
-    upload_file_in_chunks(upload_url, file_path)
+    for root, _, files in os.walk("/opt/dls"):
+        for file in files:
+            file_path = os.path.join(root, file)
+            # 调用上传函数进行文件上传
+            upload_file_in_chunks(upload_url, file_path)
+
 else:
     exit(1)
